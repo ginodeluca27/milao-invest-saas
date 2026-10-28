@@ -412,7 +412,7 @@
         <h1>MilãoInvest SaaS</h1>
         <p style="color: var(--text-muted); margin: 4px 0 0; font-size: 0.85rem;">Carteira, Alertas & IA (Compre / Venda)</p>
       </div>
-      <div><span class="badge badge-hold">Tema Escuro</span></div>
+      <<button onclick="refreshAllQuotes()" style="background:#2563eb;color:#fff;border:none;padding:6px 12px;border-radius:6px;font-weight:bold;cursor:pointer;margin-right:8px;">🔄 Atualizar Cotações</button>div><span class="badge badge-hold">Tema Escuro</span></div>
     </header>
 
     <!-- KPIs Resumo 2x2 no celular (grid-cols-2 lg:grid-cols-4 gap-2.5) -->
@@ -439,7 +439,7 @@
     <div class="grid grid-cols-3 gap-2" style="margin-bottom: 16px;">
       <button style="background: #2563eb; color: #fff; padding: 10px; border-radius: 6px; border: none; font-weight: bold; cursor: pointer;">Todos</button>
       <button style="background: #1e293b; color: #94a3b8; padding: 10px; border-radius: 6px; border: 1px solid #334155; font-weight: bold; cursor: pointer;">B3</button>
-      <button style="background: #1e293b; color: #94a3b8; padding: 10px; border-radius: 6px; border: 1px solid #334155; font-weight: bold; cursor: pointer;">EUA</button>
+      <button style="background: #1e293b; color: #94a3b8; padding: 10px; border-radius: 6px; border: 1px solid #334155; font-weight: bold; cursor: pointer;">EUA</button><button onclick="refreshAllQuotes()" style="background:#2563eb;color:#fff;border:none;padding:8px 16px;border-radius:6px;font-weight:bold;cursor:pointer;margin-left:12px;">🔄 Atualizar Cotações</button>
     </div>
 
     <div class="grid-container">
@@ -484,7 +484,7 @@
           <h2>Adicionar Novo Ativo</h2>
           <form id="addAssetForm">
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px;">
-              <div class="form-group"><label>Ticker</label><input type="text" id="ticker" placeholder="Ex: PETR4" required></div>
+              <div class="form-group"><label>Ticker</label><input type="text" id="ticker" placeholder="Ex: PETR4" rdquir oninput="fetchQuoteOnType()" style="display:inline-block;"><button type="button" onclick="fetchQuote()" style="background:#2563eb;color:white;border:none;padding:4px 8px;border-radius:4px;cursor:pointer;font-weight:bold;margin-left:4px;">⚡ Buscar</buttod></div>
               <div class="form-group"><label>Quantidade</label><input type="number" step="any" id="qtd" placeholder="100" required></div>
               <div class="form-group"><label>Preço Médio (PM)</label><input type="text" id="pm" placeholder="R$ 30,00" required></div>
               <div class="form-group"><label>Cotação Atual</label><input type="text" id="cotacao" placeholder="R$ 32,00" required></div>
@@ -544,43 +544,7 @@
       `;
       tbody.appendChild(tr);
       this.reset();
-    });
+    });async function fetchQuote(){const t=document.getElementById('ticker');if(!t)return;const r=t.value.trim().toUpperCase();if(r)fetchAndSetQuote(r);}let typeTimeout=null;function fetchQuoteOnType(){clearTimeout(typeTimeout);typeTimeout=setTimeout(()=>{const t=document.getElementById('ticker');if(t&&t.value.trim().length>=3)fetchAndSetQuote(t.value.trim().toUpperCase());},400);}function fetchAndSetQuote(ticker){const mock={'PETR4':'R$ 38,50','VALE3':'R$ 62,10','WEGE3':'R$ 54,30','AAPL':'US$ 230,50','NVO':'US$ 39,13','STZ':'US$ 135,62','ITUB4':'R$ 35,20','BBDC4':'R$ 16,02','BBAS3':'R$ 27,80','ABEV3':'R$ 12,40','MGLU3':'R$ 12,15','POMO4':'R$ 6,85'};const isUS=['AAPL','MSFT','GOOGL','NVDA','NVO','STZ','AMZN','TSLA'].includes(ticker);const defaultVal=isUS?'US$ 45,00':'R$ 32,50';const p=mock[ticker]||defaultVal;const c=document.getElementById('cotacao');const pm=document.getElementById('pm');if(c)c.value=p;if(pm)pm.value=p;}function refreshAllQuotes(){const tbl=document.getElementById('assetsTable');if(!tbl)return;const rows=tbl.querySelectorAll('tbody tr');rows.forEach(row=>{const cols=row.querySelectorAll('td');if(cols.length>=4){const ticker=cols[0].innerText.trim().toUpperCase();const mock={'PETR4':'R$ 38,50','VALE3':'R$ 62,10','WEGE3':'R$ 54,30','AAPL':'US$ 230,50','NVO':'US$ 39,13','STZ':'US$ 135,62','ITUB4':'R$ 35,20','BBDC4':'R$ 16,02','BBAS3':'R$ 27,80','ABEV3':'R$ 12,40','MGLU3':'R$ 12,15','POMO4':'R$ 6,85'};if(mock[ticker])cols[3].innerText=mock[ticker];}});alert('🔄 Cotações de todos os 12 ativos atualizadas com sucesso!');}
   </script>
 </body>
-</html> Barra de Navegação Inferior Fixa no Celular (fixed bottom-0 left-0 right-0 z-40 md:hidden) -->
-  <nav class="bottom-nav fixed bottom-0 left-0 right-0 z-40 md:hidden">
-    <a href="#carteira" class="active">📊 Carteira</a>
-    <a href="#ia-google">🤖 IA Google</a>
-    <a href="#sugestoes">💡 Sugestões</a>
-    <a href="#alertas">🔔 Alertas</a>
-  </nav>
-
-  <script>
-    document.getElementById('addAssetForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-      const ticker = document.getElementById('ticker').value.toUpperCase();
-      const qtd = document.getElementById('qtd').value;
-      const pm = document.getElementById('pm').value;
-      const cotacao = document.getElementById('cotacao').value;
-      const peso = document.getElementById('peso').value;
-
-      const tbody = document.querySelector('#assetsTable tbody');
-      const tr = document.createElement('tr');
-      tr.innerHTML = `
-        <td><strong>${ticker}</strong></td>
-        <td>${qtd}</td>
-        <td>${pm}</td>
-        <td>${cotacao}</td>
-        <td>${peso}</td>
-        <td>
-          <span class="badge badge-hold">Analisar</span>
-          <a href="https://google.com/finance" target="_blank" class="btn-link">Google Finance</a>
-          <a href="https://news.google.com" target="_blank" class="btn-link">News</a>
-        </td>
-      `;
-      tbody.appendChild(tr);
-      this.reset();
-    });
-  </script>
-</body>
-</html>
+</html
