@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MilãoInvest SaaS — Carteira, Alertas & IA (Compre / Venda)</title>
+  <style>
+    :root {
+      --bg-color: #0f172a;
+      --card-bg: #1e293b;
+      --text-color: #f8fafc;
+      --text-muted: #94a3b8;
+      --accent-green: #22c55e;
+      --accent-red: #ef4444;
+      --accent-blue: #3b82f6;
+      --border-color: #334155;
+    }
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      margin: 0; padding: 20px;
+    }
+    .container { max-width: 1200px; margin: 0 auto; }
+    header {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 24px; border-bottom: 1px solid var(--border-color); padding-bottom: 16px;
+    }
+    h1 { margin: 0; font-size: 1.8rem; color: var(--accent-blue); }
+    .grid { display: grid; grid-template-columns: 2fr 1fr; gap: 20px; }
+    @media (max-width: 900px) { .grid { grid-template-columns: 1fr; } }
+    .card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 20px; margin-bottom: 20px; }
+    h2 { font-size: 1.2rem; margin-top: 0; margin-bottom: 16px; border-bottom: 1px solid var(--border-color); padding-bottom: 8px; }
+    table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.9rem; }
+    th, td { padding: 10px; border-bottom: 1px solid var(--border-color); }
+    th { color: var(--text-muted); }
+    .badge { padding: 4px 8px; border-radius: 4px; font-weight: bold; font-size: 0.8rem; text-decoration: none; display: inline-block; }
+    .badge-buy { background-color: rgba(34, 197, 94, 0.2); color: var(--accent-green); }
+    .badge-sell { background-color: rgba(239, 68, 68, 0.2); color: var(--accent-red); }
+    .badge-hold { background-color: rgba(59, 130, 246, 0.2); color: var(--accent-blue); }
+    .btn-link { color: var(--accent-blue); text-decoration: none; font-size: 0.85rem; border: 1px solid var(--accent-blue); padding: 2px 6px; border-radius: 4px; margin-left: 4px; }
+    .btn-link:hover { background: var(--accent-blue); color: #fff; }
+    .form-group { margin-bottom: 12px; }
+    label { display: block; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 4px; }
+    input, select, button { width: 100%; padding: 8px; border-radius: 4px; border: 1px solid var(--border-color); background: #0f172a; color: var(--text-color); box-sizing: border-box; }
+    button.btn-primary { background: var(--accent-blue); color: #fff; border: none; font-weight: bold; cursor: pointer; margin-top: 8px; }
+    button.btn-primary:hover { opacity: 0.9; }
+    .alert-item { padding: 10px; border-radius: 6px; background: rgba(255,255,255,0.05); margin-bottom: 8px; border-left: 4px solid var(--accent-blue); }
+    .alert-high { border-left-color: var(--accent-green); }
+    .alert-low { border-left-color: var(--accent-red); }
+    .suggestion-box { background: rgba(59, 130, 246, 0.1); border-left: 4px solid var(--accent-blue); padding: 12px; border-radius: 4px; margin-bottom: 10px; font-size: 0.9rem; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div>
+        <h1>MilãoInvest SaaS</h1>
+        <p style="color: var(--text-muted); margin: 4px 0 0 0;">Carteira, Alertas & IA (Compre / Venda)</p>
+      </div>
+      <div><span class="badge badge-hold">Tema Escuro Ativo</span></div>
+    </header>
+
+    <div class="grid">
+      <main>
+        <div class="card">
+          <h2>Carteira de Ativos do Milão (12 Ativos)</h2>
+          <table id="assetsTable">
+            <thead>
+              <tr><th>Ativo</th><th>Qtd</th><th>PM</th><th>Cotação</th><th>Peso</th><th>Ação / Análise</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><strong>BBDC4</strong></td><td>1000</td><td>R$ 15,26</td><td>R$ 16,02</td><td>16,90%</td><td><span class="badge badge-buy">Comprar</span> <a href="https://google.com/finance" target="_blank" class="btn-link">Google Finance</a> <a href="https://news.google.com" target="_blank" class="btn-link">News</a></td></tr>
+              <tr><td><strong>BBAS3</strong></td><td>700</td><td>R$ 17,65</td><td>R$ 17,81</td><td>13,15%</td><td><span class="badge badge-hold">Manter</span> <a href="https://google.com/finance" target="_blank" class="btn-link">Google Finance</a> <a href="https://news.google.com" target="_blank" class="btn-link">News</a></td></tr>
+              <tr><td><strong>VIVA3</strong></td><td>500</td><td>R$ 19,09</td><td>R$ 19,54</td><td>10,31%</td><td><span class="badge badge-buy">Comprar</span> <a href="https://google.com/finance" target="_blank" class="btn-link">Google Finance</a> <a href="https://news.google.com" target="_blank" class="btn-link">News</a></td></tr>
+              <tr><td><strong>LREN3</strong></td><td>1000</td><td>R$ 9,58</td><td>R$ 9,64</td><td>10,17%</td><td><span class="badge badge-hold">Manter</span> <a href="https://google.com/finance" target="_blank" class="btn-link">Google Finance</a> <a href="https://news.google.com" target="_blank" class="btn-link">News</a></td></tr>
+              <tr><td><strong>POMO4</strong></td><td>2000</td><td>R$ 4,06</td><td>R$ 4,08</td><td>8,61%</td><td><span class="badge badge-buy">Comprar</span> <a href="https://google.com/finance" target="_blank" class="btn-link">Google Finance</a> <a href="https://news.google.com" target="_blank" class="btn-link">News</a></td></tr>
+              <tr><td><strong>SBSP3</strong></td><td>300</td><td>R$ 24,86</td><td>R$ 25,30</td><td>8,01%</td><td><span class="badge badge-hold">Manter</span> <a href="https://google.com/finance" target="_blank" class="btn-link">Google Finance</a> <a href="https://news.google.com" target="_blank" class="btn-link">News</a></td></tr>
+              <tr><td><strong>RENT3</strong></td><td>200</td><td>R$ 31,95</td><td>R$ 32,40</td><td>6,75%</td><td><span class="badge badge-buy">Comprar</span> <a href="https://google.com/finance" target="_blank" class="btn-link">Google Finance</a> <a href="https://news.google.com" target="_blank" class="btn-link">News</a></td></tr>
+              <tr><td><strong>VAMO3</strong></td><td>2000</td><td>R$ 2,82</td><td>R$ 2,89</td><td>5,95%</td><td><span class="badge badge-buy">Comprar</span> <a href="https://google.com/finance" target="_blank" class="btn-link">Google Finance</a> <a href="https://news.google.com" target="_blank" class="btn-link">News</a></td></tr>
+              <tr><td><strong>CMIG4</strong></td><td>500</td><td>R$ 10,33</td><td>R$ 10,55</td><td>5,45%</td><td><span class="badge badge-hold">Manter</span> <a href="https://google.com/finance" target="_blank" class="btn-link">Google Finance</a> <a href="https://news.google.com" target="_blank" class="btn-link">News</a></td></tr>
+              <tr><td><strong>MDIA3</strong></td><td>200</td><td>R$ 16,24</td><td>R$ 16,50</td><td>3,43%</td><td><span class="badge badge-buy">Comprar</span> <a href="https://google.com/finance" target="_blank" class="btn-link">Google Finance</a> <a href="https://news.google.com" target="_blank" class="btn-link">News</a></td></tr>
+              <tr><td><strong>NVO</strong></td><td>51.5161</td><td>US$ 37,71</td><td>US$ 39,13</td><td>20,00%</td><td><span class="badge badge-sell">Vender</span> <a href="https://google.com/finance" target="_blank" class="btn-link">Google Finance</a> <a href="https://news.google.com" target="_blank" class="btn-link">News</a></td></tr>
+              <tr><td><strong>STZ</strong></td><td>12.7439</td><td>US$ 123,70</td><td>US$ 135,62</td><td>17,00%</td><td><span class="badge badge-sell">Vender</span> <a href="https://google.com/finance" target="_blank" class="btn-link">Google Finance</a> <a href="https://news.google.com" target="_blank" class="btn-link">News</a></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="card">
+          <h2>Adicionar Novo Ativo</h2>
+          <form id="addAssetForm">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px;">
+              <div class="form-group"><label>Ticker</label><input type="text" id="ticker" placeholder="Ex: PETR4" required></div>
+              <div class="form-group"><label>Quantidade</label><input type="number" step="any" id="qtd" placeholder="100" required></div>
+              <div class="form-group"><label>Preço Médio (PM)</label><input type="text" id="pm" placeholder="R$ 30,00" required></div>
+              <div class="form-group"><label>Cotação Atual</label><input type="text" id="cotacao" placeholder="R$ 32,50" required></div>
+              <div class="form-group"><label>Peso (%)</label><input type="text" id="peso" placeholder="5,00%" required></div>
+            </div>
+            <button type="submit" class="btn-primary">+ Adicionar à Carteira</button>
+          </form>
+        </div>
+      </main>
+
+      <aside>
+        <div class="card">
+          <h2>Sugestões do App & IA</h2>
+          <div class="suggestion-box"><strong>🎯 Rebalanceamento:</strong> Peso de NVO (20%) e STZ (17%) elevado. Considere rebalancear.</div>
+          <div class="suggestion-box"><strong>💡 Oportunidades:</strong> BBDC4, VIVA3 e POMO4 com boa margem em relação ao PM.</div>
+          <div class="suggestion-box"><strong>🛡️ Defensivos:</strong> SBSP3 e CMIG4 trazem resiliência e proventos.</div>
+        </div>
+
+        <div class="card">
+          <h2>Alertas de Alta e Baixa (Preço-Base)</h2>
+          <div class="alert-item alert-high"><strong>🟢 STZ (Alta):</strong> US$ 135,62 (+9,63% vs PM US$ 123,70). Alerta de alta ativado.</div>
+          <div class="alert-item alert-high"><strong>🟢 BBDC4 (Alta):</strong> R$ 16,02 (+4,98% vs PM R$ 15,26). Alerta de valorização.</div>
+          <div class="alert-item alert-low"><strong>🔴 VAMO3 (Baixa/Aporte):</strong> R$ 2,89 próximo ao Preço-Base R$ 2,82. Zona de aporte.</div>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('addAssetForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const ticker = document.getElementById('ticker').value.toUpperCase();
+      const qtd = document.getElementById('qtd').value;
+      const pm = document.getElementById('pm').value;
+      const cotacao = document.getElementById('cotacao').value;
+      const peso = document.getElementById('peso').value;
+
+      const tbody = document.querySelector('#assetsTable tbody');
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td><strong>${ticker}</strong></td>
+        <td>${qtd}</td>
+        <td>${pm}</td>
+        <td>${cotacao}</td>
+        <td>${peso}</td>
+        <td>
+          <span class="badge badge-hold">Analisar</span>
+          <a href="https://google.com/finance" target="_blank" class="btn-link">Google Finance</a>
+          <a href="https://news.google.com" target="_blank" class="btn-link">News</a>
+        </td>
+      `;
+      tbody.appendChild(tr);
+      this.reset();
+    });
+  </script>
+</body>
+</html>
